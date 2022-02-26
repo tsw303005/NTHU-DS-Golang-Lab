@@ -65,8 +65,8 @@ func (wp *workerPool) run(ctx context.Context) {
 		case <-ctx.Done():
 			return
 		default:
-			task, finish := <-wp.tasks
-			if finish {
+			task, keep_doing := <-wp.tasks
+			if keep_doing {
 				wp.results <- task.Func(task.Args...)
 			} else {
 				return
